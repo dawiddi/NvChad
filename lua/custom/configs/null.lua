@@ -48,7 +48,7 @@ M.setup = function()
       formatting.black.with { extra_args = { "--fast" } },
       formatting.stylua,
       formatting.google_java_format,
-      diagnostics.flake8,
+      -- diagnostics.flake8.with { extra_args = { "--max-line-length", "88", "--extend-ignore", "E203" }},
     },
     on_attach = on_attach
 }

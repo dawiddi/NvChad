@@ -7,7 +7,7 @@ M.disabled = {
 }
 M.abc = {
   n = {
-    ["<leader>w"] = {"<cmd> w <CR>", "save file"},
+    ["<leader>w"] = {"<cmd> w <CR><ESC>", "save file", opts},
     ["<leader>q"] = {":q <CR>", "quit"},
     ["<leader><leader>"] = {
       function()
