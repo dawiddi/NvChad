@@ -1,10 +1,6 @@
 local lib = require("nvim-tree.lib")
 local view = require("nvim-tree.view")
 
-local function collapse_all()
-    require("nvim-tree.actions.tree-modifiers.collapse-all").fn()
-end
-
 local function edit_or_open()
     -- open as vsplit on current node
     local action = "edit"
@@ -56,12 +52,30 @@ local function copy_file_to(node)
     -- Copy the file
     vim.fn.system { 'cp', '-R', file_src, file_out }
 end
+local function my_on_attach(bufnr)
+  local api = require "nvim-tree.api"
 
+  local function opts(desc)
+    return { desc = "nvim-tree: " .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
+  end
+
+  -- default mappings
+  api.config.mappings.default_on_attach(bufnr)
+
+  -- custom mappings
+  vim.keymap.set('n', 'l', edit_or_open, opts('Edit or open'))
+  vim.keymap.set('n', 'L', vsplit_preview, opts('Vertical split preview'))
+  vim.keymap.set('n', 'h', api.tree.close, opts('Close node'))
+  vim.keymap.set('n', 'H', api.tree.collapse_all, opts('Collapse all'))
+  vim.keymap.set('n', 'c', copy_file_to, opts('Copy file to...'))
+
+end
 local options = {
   filters = {
     dotfiles = false,
     exclude = { vim.fn.stdpath "config" .. "/lua/custom" },
   },
+  on_attach = my_on_attach,
   disable_netrw = true,
   hijack_netrw = true,
   hijack_cursor = true,
@@ -75,17 +89,16 @@ local options = {
     adaptive_size = false,
     side = "left",
     width = 30,
-    hide_root_folder = true,
-    mappings = {
-      custom_only = false,
-      list = {
-        { key = "l", action = "edit", action_cb = edit_or_open },
-        { key = "L", action = "vsplit_preview", action_cb = vsplit_preview },
-        { key = "h", action = "close_node" },
-        { key = "H", action = "collapse_all", action_cb = collapse_all },
-        { key = "c", action = "copy_file_to", action_cb = copy_file_to },
-      }
-    }
+  --   mappings = {
+  --     custom_only = false,
+  --     list = {
+  --       { key = "l", action = "edit", action_cb = edit_or_open },
+  --       { key = "L", action = "vsplit_preview", action_cb = vsplit_preview },
+  --       { key = "h", action = "close_node" },
+  --       { key = "H", action = "collapse_all", action_cb = collapse_all },
+  --       { key = "c", action = "copy_file_to", action_cb = copy_file_to },
+  --     }
+  --   }
   },
   git = {
     enable = false,
@@ -102,6 +115,7 @@ local options = {
   renderer = {
     highlight_git = false,
     highlight_opened_files = "none",
+    root_folder_label = true,
 
     indent_markers = {
       enable = false,
