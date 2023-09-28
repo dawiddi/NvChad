@@ -1,6 +1,12 @@
 local lib = require("nvim-tree.lib")
 local view = require("nvim-tree.view")
 
+local function change_root_to_global_cwd()
+  local api = require("nvim-tree.api")
+  local global_cwd = vim.fn.getcwd(-1, -1)
+  api.tree.change_root(global_cwd)
+end
+
 local function edit_or_open()
     -- open as vsplit on current node
     local action = "edit"
@@ -9,14 +15,14 @@ local function edit_or_open()
     -- Just copy what's done normally with vsplit
     if node.link_to and not node.nodes then
         require('nvim-tree.actions.node.open-file').fn(action, node.link_to)
-        view.close() -- Close the tree if file was opened
+        -- view.close() -- Close the tree if file was opened
 
     elseif node.nodes ~= nil then
         lib.expand_or_collapse(node)
 
     else
         require('nvim-tree.actions.node.open-file').fn(action, node.absolute_path)
-        view.close() -- Close the tree if file was opened
+        -- view.close() -- Close the tree if file was opened
     end
 
 end
@@ -67,7 +73,11 @@ local function my_on_attach(bufnr)
   vim.keymap.set('n', 'L', vsplit_preview, opts('Vertical split preview'))
   vim.keymap.set('n', 'h', api.tree.close, opts('Close node'))
   vim.keymap.set('n', 'H', api.tree.collapse_all, opts('Collapse all'))
-  vim.keymap.set('n', 'c', copy_file_to, opts('Copy file to...'))
+  vim.keymap.set('n', 'c', function()
+    local node = api.tree.get_node_under_cursor()
+    copy_file_to(node)
+  end, opts('Copy file to...'))
+  vim.keymap.set('n', '<C-c>', change_root_to_global_cwd, opts('Change Root To Global CWD'))
 
 end
 local options = {
@@ -83,7 +93,7 @@ local options = {
   sync_root_with_cwd = true,
   update_focused_file = {
     enable = true,
-    update_root = false,
+    update_root = true,
   },
   view = {
     adaptive_size = false,
@@ -110,6 +120,7 @@ local options = {
   actions = {
     open_file = {
       resize_window = true,
+      quit_on_open = false,
     },
   },
   renderer = {

@@ -51,6 +51,13 @@ local plugins = {
     config = function()
       require("custom.configs.trouble").setup()
     end,
-  }
+  },
+  {
+    "Vigemus/iron.nvim",
+    lazy = false,
+    config = function()
+      require("custom.configs.iron").setup()
+    end,
+  },
 }
 return plugins
