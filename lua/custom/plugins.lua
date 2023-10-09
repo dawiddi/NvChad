@@ -54,10 +54,18 @@ local plugins = {
   },
   {
     "Vigemus/iron.nvim",
-    lazy = false,
+    lazy = true,
     config = function()
       require("custom.configs.iron").setup()
     end,
   },
+  {
+    "nvim-focus/focus.nvim",
+    lazy = false,
+    version=false,
+    config = function()
+      require("custom.configs.focus").setup()
+    end,
+  }
 }
 return plugins

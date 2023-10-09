@@ -1,5 +1,4 @@
 local iron = require("iron.core")
-
 local M = {
   setup = function()
     iron.setup({
