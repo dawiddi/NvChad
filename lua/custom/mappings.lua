@@ -16,14 +16,19 @@ M.abc = {
       "show cursor",
       opts
     },
-    ["<C-t>"] = {
-      "<cmd>ToggleTerm direction=float<CR>",
-      "open float terminal"
-    },
     ["<leader>lf"] = {
       "<cmd>lua vim.lsp.buf.format{ async = true }<CR>",
       "Format buffer"
+    },
+    ["+"] = {
+      "<cmd>vertical resize +2<CR>",
+      "Increase window width"
+    },
+    ["ü"] = {
+      "<cmd>vertical resize -2<CR>",
+      "Decrease window width"
     }
+
   },
   v = {
     ["<"] = {"<gv", ""},
@@ -109,7 +114,7 @@ M.nvterm = {
         require("nvterm").close_all_terms()
       end,
       "toggle all terminal windows"
-    }
+    },
   },
 }
 M.lspconfig = {
@@ -117,12 +122,54 @@ M.lspconfig = {
 
   -- See `<cmd> :help vim.lsp.*` for documentation on any of the below functions
   n = {
+    ["gd"] = {
+      function()
+        require("goto-preview").goto_preview_definition()
+      end,
+      "Code definition preview"
+    },
+    ["gdd"] = {
+      function()
+        vim.lsp.buf.definition()
+      end,
+      "LSP definition",
+    },
+    ["gi"] = {
+      function()
+        require("goto-preview").goto_preview_implementation()
+      end,
+      "Code implementation preview"
+    },
+    ["gii"] = {
+      function()
+        vim.lsp.buf.implementation()
+      end,
+      "LSP implementation",
+    },
     ["gl"] = {
       function()
         vim.diagnostic.open_float()
       end,
       "floating diagnostic",
-    }
+    },
+    ["gq"] = {
+      function()
+        require("goto-preview").close_all_win()
+      end,
+      "Close all preview windows"
+    },
+    ["gt"] = {
+      "<cmd>TroubleToggle document_diagnostics<CR>",
+      "Toggle Trouble Document Diagnostics"
+    },
+    ["gta"] = {
+      "<cmd>TroubleToggle workspace_diagnostics<CR>",
+      "Toggle Trouble Workspace Diagnostics"
+    },
+    ["gtq"] = {
+      "<cmd>TroubleToggle quickfix<CR>",
+      "Toggle Trouble Quickfix"
+    },
   }
 }
 return M

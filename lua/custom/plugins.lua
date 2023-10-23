@@ -29,14 +29,6 @@ local plugins = {
     end,
   },
   {
-    "echasnovski/mini.sessions",
-    version = false,
-    lazy = false,
-    config = function()
-      require("custom.configs.session").setup()
-    end
-  },
-  {
     "jose-elias-alvarez/null-ls.nvim",
     lazy = false,
     after = "nvim-lspconfig",
@@ -55,6 +47,7 @@ local plugins = {
   {
     "Vigemus/iron.nvim",
     lazy = true,
+    ft = "python",
     config = function()
       require("custom.configs.iron").setup()
     end,
@@ -66,6 +59,37 @@ local plugins = {
     config = function()
       require("custom.configs.focus").setup()
     end,
+  },
+  {
+    "rmagatti/goto-preview",
+    lazy = true,
+    ft = "python",
+    config = function()
+      require("custom.configs.goto_preview").setup()
+    end,
+  },
+  {
+    "romgrk/nvim-treesitter-context",
+    lazy = true,
+    ft = "python",
+    config = function()
+      require("custom.configs.treesitter_context").setup()
+    end
+  },
+  {
+    "ggandor/leap.nvim",
+    lazy = false,
+    config = function()
+      require("leap").add_default_mappings()
+    end
+  },
+  {
+    "simrat39/symbols-outline.nvim",
+    lazy=true,
+    ft="python",
+    config = function()
+      require("symbols-outline").setup()
+    end
   }
 }
 return plugins
