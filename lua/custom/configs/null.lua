@@ -42,12 +42,16 @@ M.setup = function()
     debug = false,
     sources = {
       formatting.prettier.with {
+        disabled_filetypes = {"json", "txt"},
         extra_filetypes = { "toml" },
         extra_args = { "--no-semi", "--single-quote", "--jsx-single-quote" },
       },
       formatting.black.with { extra_args = { "--fast" } },
       formatting.stylua,
       formatting.google_java_format,
+      formatting.jq.with {
+        filetypes = {"json", "txt", "text"}
+      }
       -- diagnostics.flake8.with { extra_args = { "--max-line-length", "88", "--extend-ignore", "E203" }},
     },
     on_attach = on_attach
