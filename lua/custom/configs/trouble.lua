@@ -5,7 +5,10 @@ end
 
 local M = {
   setup = function()
-    trouble.setup()
+    trouble.setup({
+      mode='document_diagnostics',
+      cycle_results=false,
+    })
   end
 }
 return M
