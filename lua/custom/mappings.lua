@@ -27,8 +27,19 @@ M.abc = {
     ["ü"] = {
       "<cmd>vertical resize -2<CR>",
       "Decrease window width"
-    }
-
+    },
+    ["<A-l>"] = {
+      function()
+        require('focus').split_command('l')
+      end,
+      "Split left",
+    },
+    ["<A-j>"] = {
+      function()
+        require('focus').split_command("j")
+      end,
+      "Split down",
+    },
   },
   v = {
     ["<"] = {"<gv", ""},
