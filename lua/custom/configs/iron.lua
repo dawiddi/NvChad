@@ -13,8 +13,6 @@ local M = {
         repl_definition = {
           python = {
             command = {
-              "poetry",
-              "run",
               "ipython"
             },
             format = require("iron.fts.common").bracketed_paste
