@@ -43,7 +43,10 @@ local M = {
     })
     focus.setup({
       split = {
-        bufnew = true
+        bufnew = false
+      },
+      autoresize = {
+        height_quickfix = 20
       },
     })
   end
