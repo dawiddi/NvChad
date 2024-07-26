@@ -84,12 +84,11 @@ local plugins = {
     end
   },
   {
-    "simrat39/symbols-outline.nvim",
-    lazy=true,
-    ft="python",
+    "hedyhli/outline.nvim",
+    lazy = false,
     config = function()
-      require("symbols-outline").setup()
-    end
+      require("custom.configs.outline").setup()
+    end,
   },
   {
     "folke/todo-comments.nvim",
